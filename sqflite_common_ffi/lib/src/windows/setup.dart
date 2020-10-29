@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:sqlite3/open.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:path/path.dart';
@@ -9,7 +10,7 @@ import 'package:sqflite_common_ffi/src/windows/setup_impl.dart';
 /// On windows load the embedded sqlite3.dll for convenience
 void windowsInit() {
   var location = findPackagePath(Directory.current.path);
-  var path = normalize(join(location, 'src', 'windows', 'sqlite3.dll'));
+  var path = kReleaseMode ? 'sqlite3.dll' : normalize(join(location, 'src', 'windows', 'sqlite3.dll'));
   open.overrideFor(OperatingSystem.windows, () {
     // devPrint('loading $path');
     try {
